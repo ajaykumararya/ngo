@@ -5,47 +5,46 @@ $menu = array(
     'icon' => array('file', 3),
     'submenu' => array(
         array(
-            'label' => 'About Us',
-            'type' => 'about_us',
+            'label' => 'Contact Us',
+            'type' => 'contact_us',
             'icon' => array('file', 4),
-            'url' => 'cms/static-page/about_us',
+            'url' => 'cms/static-page/contact_us',
+        ),
+        array(
+            'label' => 'Header',
+            'type' => 'header_setting',
+            'icon' => array('file',4),
+            'url' => 'cms/static-page/header'
+        ),      
+        array(
+            'label' => 'Our Counter',
+            'type' => 'our_counter',
+            'icon' => array('file', 4),
+            'url' => 'cms/static-page/our_counter',
         ),
         array(
             'label' => 'Our Courses',
             'type' => 'our_courses',
             'icon' => array('file', 4),
             'url' => 'cms/static-page/our_courses',
+        ),  
+        array(
+            'label' => 'About us',
+            'type' => 'about_us',
+            'icon' => array('file',4),
+            'url' => 'cms/static-page/about_us'
+        ),        
+        array(
+            'label' => 'Enquiry Page',
+            'type' => 'enquiry_page',
+            'icon' => array('file',4),
+            'url' => 'cms/static-page/enquiry_page'
         ),
         array(
-            'label' => 'Our Acheivements',
-            'type' => 'our_acheivements',
-            'icon' => array('file', 4),
-            'url' => 'cms/static-page/our_acheivements',
-        ),
-        
-        array(
-            'label' => 'Our Aim',
-            'type' => 'our_aim',
-            'icon' => array('file', 4),
-            'url' => 'cms/static-page/our_aim',
-        ),
-        array(
-            'label' => 'Get-In-Touch',
-            'type' => 'get-in-touch',
-            'icon' => array('file', 4),
-            'url' => 'cms/static-page/get-in-touch',
-        ),
-        array(
-            'label' => 'List All Course(S) ',
-            'type' => 'list-all-courses',
-            'icon' => array('file', 4),
-            'url' => 'cms/static-page/list-all-courses',
-        ),
-        array(
-            'label' => 'Our Syllabus',
-            'type' => 'our_syllabus',
-            'icon' => array('file', 4),
-            'url' => 'cms/static-page/our_syllabus',
-        ),
+            'label' => 'Testimonial',
+            'type' => 'testimonial',
+            'icon' => array('file',4),
+            'url' => 'cms/static-page/testimonial'
+        )
     )
 );

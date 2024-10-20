@@ -1,10 +1,9 @@
-<section id="Home_about" class="sec_padd">
+<div class="ttm-row services-section clearfix ">
     <div class="container">
         <div class="row">
-
-            <div class="para_wrapper">
+            <div class="col-md-12">
                 {content}
             </div>
         </div>
     </div>
-</section>
+</div>

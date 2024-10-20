@@ -2,171 +2,107 @@
 if ($isPrimary) {
     $sliders = $this->SiteModel->slider();
     if ($sliders->num_rows()) {
-
         ?>
         <style>
-            .slide .slide__inner{
-                background-size:100% 100%!important;
-                background-repeat: no-repeat!important;
+            .banner-bg {
+                display: block;
+                height: 600px
             }
-            @media screen and (min-width: 800px) {
-                .slide .slide__inner{
-                height: 475px!important;
+
+            .banner-bg img {
+                height: 100%;
+            }
+
+            .banner-bg-mobile {
+                display: none;
+            }
+
+            @media only screen and (max-width: 767px) {
+                .banner-bg {
+                    display: none;
                 }
-                .slider_wrapper{
-                    height:410px
+
+                .banner-bg-mobile {
+                    display: block;
+                }
+
+                .banner-bg-mobile img {
+                    height: 203px;
+                    width: 100%;
+                }
+
+                .banner_content_wrap .carousel-item {
+                    padding: 0px 0;
                 }
             }
         </style>
-        <!-------------------Slider section start---------->
-        <section class="slider_wrapper" >
-
-            <div class="container-fluid">
-
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="slider">
-                            <!-- slides -->
-                            <div class="slider__slides">
-                                <?php
-                                $i = 1;
-                                foreach ($sliders->result() as $slider) {
-                                    $active = $i == 1 ? 's--active' : '';
-                                    
-                                    $active = $i == $sliders->num_rows() ? 's--prev' : $active;
-                                    // $active = $i == $sliders->num_rows() ? 's--prev' : $active;
-                                    $i++;
-                                    ?>
-
-                                    <div class="slide <?=$active?>" >
-                                        <div class="slide__inner" style="background-image:url('<?=base_url('upload/'.$slider->image)?>')!important;">
-                                        </div>
-                                    </div>
-
-                                    <?php
-                                }
-                                ?>
-                                <!-- <div class="slide s--active">
-                                    <div class="slide__inner">
-                                        <div class="btn_position">
-                                            <a href="https://wa.me/9422123456" target="_blank" class="btn btn-lg">
-                                                <span><i class="fas fa-phone-alt pr-1"></i> 9422123456</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="slide">
-                                    <div class="slide__inner">
-                                    </div>
-                                </div>
-                                <div class="slide s--prev">
-                                    <div class="slide__inner">
-                                    </div>
-                                </div> -->
-
-
-                            </div>
-                            <!-- slides end -->
-                            <div class="slider__control">
-                                <div class="slider__control-line"></div>
-                                <div class="slider__control-line"></div>
-                            </div>
-                            <div class="slider__control slider__control--right m--right">
-                                <div class="slider__control-line"></div>
-                                <div class="slider__control-line"></div>
-                            </div>
+        <section class="banner_section p-0 full_screen">
+            <div id="carouselExampleFade" class="banner_content_wrap carousel slide carousel-fade" data-ride="carousel">
+                <div class="carousel-inner">
+                    <?php
+                    $i = 1;
+                    foreach ($sliders->result() as $slider) {
+                        $active = $i == 1 ? 'active' : '';
+                        ?>
+                        <div class="carousel-item <?= $active ?>  background_bg overlay_bg_40 background_bg_image<?= $i++ ?>">
+                            <span class="banner-bg"><img src="{base_url}upload/<?= $slider->image ?>" width="100%"></span>
+                            <span class="banner-bg-mobile"><img src="{base_url}upload/<?= $slider->image ?>" width="100%"></span>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-
-                        <div class="contact-form-wrap my-3" data-aos="fade-right">
-                            <div class="section-title text-left">
-                                <!-- <span class="sub-title">FRANCHISEE ENQUIRY FORM</span> -->
-                                <h2 class="title">ENQUIRY <span class="color-secondary"> FORM</span></h2>
-                                <div class="mt-separator"><img src="{theme_url}assets/images/title.webp" alt="graduation.webp">
-                                </div>
-                            </div>
-                            <form id="entry-form" method="post">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Your Name"
-                                            autocomplete="true" onkeypress="return alphaonly(event)">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="tel" class="form-control" name="mobile" id="mobile" placeholder="Mobile"
-                                            autocomplete="true" onkeypress="only_number(event)" maxlength="10">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="email" class="form-control" name="email" id="email" placeholder="Email"
-                                            autocomplete="true">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <select name="state" id="state">
-                                            <option value="">Select State</option>
-                                            <?php
-                                            foreach($this->db->order_by('STATE_NAME','ASC')->get('state')->result() as $row)
-                                                echo '<option value="'.$row->STATE_ID.'">'.$row->STATE_NAME.'</option>';
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="city" id="city" placeholder="City"
-                                            autocomplete="true" onkeypress="return alphaonly(event)">
-                                    </div>
-
-                                </div>
-                                <button type="button" name="submit" value="submit" class="formSend_btn"
-                                    onclick="return validation()">Submit</button>
-                            </form>
-                        </div>
-
+                        <?php
+                    }
+                    ?>
+                    <div class="carousel-nav carousel_style1">
+                        <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                            <i class="ion-chevron-left"></i>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                            <i class="ion-chevron-right"></i>
+                        </a>
                     </div>
                 </div>
-
-            </div>
-
-
-
         </section>
-        <!-------------------Slider section end----------->
-<?php
+        <?php
     }
-}
-else{
+    if ($this->SiteModel->get_setting('slider_icons') == 'on') {
+        echo '<section class="clearfix res-1199-mt-0 position-relative z-1">
+                <div class="row bg-img1 no-gutters ttm-bgcolor-white box-shadow2">';
+        for ($i = 1; $i <= 5; $i++) {
+            $title = $this->SiteModel->get_setting('slider_title_' . $i);
+            $value = $this->SiteModel->get_setting('slider_value_' . $i, '#');
+            $icon = $this->SiteModel->get_setting('slider_icon_' . $i);
+            echo '<div class="offer">
+                    <a href="'.$value.'">
+                        <h4><i class="'.$icon.'" aria-hidden="true"></i> '.$title.' </h4>
+                    </a>
+                </div>';
+        }
+        echo '</div>
+            </section>';
+    }
+} else {
+
     ?>
-    <section id="inner_banner" class="main_bannerWrapper about_banner" style="background-image:url('{theme_url}assets/images/about_banner.webp')">
-    <div data-aos="zoom-in-down" class="aos-init aos-animate">
-        <div class="conatiner">
-            <div class="Head_txt">
-                <h1>{page_name}</h1>
-                <h6>{page_name} <span><i class="fas fa-angle-double-right pl-2 pr-2"></i></span><a href="{base_url}">HOME </a></h6>
+    <section class="ttm-row styleservices-section ttm-bgcolor-skincolor res-991-pb-100 clearfix">
+        <div class="container">
+            <!-- section title -->
+            <div class="row section-title with-desc clearfix">
+                <div class="col-md-12 p-0 ml-15">
+                    <div class="title-header overflow-hidden">
+                        <h5 class="ttm-textcolor-skincolor">{title}</h5>
+                        <h1 class="title ttm-textcolor-white">{page_name}</h1>
+                    </div>
+                </div>
+                <!-- <div class="col-md-6">
+                    <div
+                        class="title-desc ttm-textcolor-white border-left pl-30 pr-30 pt-10 pb-10 mt-30 res-767-p-0 res-767-mt-0 res-767-b-0">
+                        Helping you achieve your dreams by nurturing the international Beauty Artist in You</div>
+                </div> -->
+                <!-- section title end -->
             </div>
         </div>
-    </div>
-</section>
+    </section>
     <?php
+
 }
 ?>
-
-{content}
-
-<?php
-/*
-?>
-
-
-<!------------want franchise banner section start------------->
-<section id="franchise" class="">
-    <div class="container">
-        <div class="franchise_bg">
-            <div class="btn-wrapper btn-wrapper2">
-                <a href="https://wa.me/9422123456" target="_blank" class="btn">
-                    <span>Apply Now</span>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-<!------------want franchise banner section end------------->
-*/
-?>
+<div class="site-main">{content}</div>
