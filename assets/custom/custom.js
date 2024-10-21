@@ -1,14 +1,15 @@
 // const dateFormat = 'd-m-Y';
 // console.log(moment());
 const course_duration_url = 'course/fetch-duration';
-const driver = window.driver.js.driver;
+// const driver = window.driver.js.driver;
 const enable_console = true;
 const inr = '₹';
 const emptyOption = '<option></option>';
-const driverObj = driver();
+// const driverObj = driver();
 const myeditor = $(".aryaeditor");
 const ki_modal = $('#mymodal');
 const defaultStudent = base_url + 'assets/media/student.png';
+const ajax_url = `${base_url}ajax/`;
 
 /*
 Handlebars.registerHelper('stripHTML', function(text) {
@@ -18,6 +19,28 @@ Handlebars.registerHelper('stripHTML', function(text) {
 });
 */
 // console.log(typeof content_css);
+
+const AryaNotify = (message = 'Hello', type = 'theme') => {
+    return $.notify(`<i class="fa fa-bell-o"></i><strong>${message}</strong>`, {
+        type: type,
+        allow_dismiss: true,
+        delay: 2000,
+        showProgressbar: true,
+        timer: 300,
+        animate: {
+            enter: "animated fadeInDown",
+            exit: "animated fadeOutUp",
+        },
+    });
+}
+var notify = AryaNotify('Loding.. page Do not close this page...');
+setTimeout(function () {
+    notify.update(
+        "message",
+        '<i class="fa fa-bell-o"></i><strong>Loading</strong> Inner Data.'
+    );
+    card_animation();
+}, 1000);
 var MYEditorCss = [];
 // $.each(content_css, function (i, n) {
 //     MYEditorCss.push(n);
@@ -874,38 +897,40 @@ const small_dom = "<'row'" +
     "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
     "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
     ">";
+/*
 $.extend(true, $.fn.dataTable.defaults, {
-    // Your default options go here
-    // dom: 'Blfrtip', // Example: Include buttons and length changing input
-    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-    paging: true,
-    lengthMenu: [10, 25, 50, 100],
-    pageLength: 10,
-    language: {
-        emptyTable: "Data not found",
-        zeroRecords: "No matching records found"
-        // You can customize other language options as needed
-    },
-    searchBuilder: {
-        columns: ':visible', // Include only visible columns in SearchBuilder
-    },
-    "language": {
-        "lengthMenu": "Show _MENU_",
-        // "infoEmpty":     "<div class='alert alert-danger'>No data available in table.</div>"
-    },
-    "dom":
-        "<'row'" +
-        "<'col-sm-3 d-flex align-items-center justify-conten-start'l>" +
-        "<'col-sm-3 d-flex align-items-center justify-content-end'f>" +
-        "<'col-sm-6 d-flex align-items-center justify-content-end'B>" +
-        ">" +
-        "<'table-responsive'tr>" +
-        "<'row'" +
-        "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-        "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-        ">"
-    // Add more default options as needed
+// Your default options go here
+// dom: 'Blfrtip', // Example: Include buttons and length changing input
+buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+paging: true,
+lengthMenu: [10, 25, 50, 100],
+pageLength: 10,
+language: {
+    emptyTable: "Data not found",
+    zeroRecords: "No matching records found"
+    // You can customize other language options as needed
+},
+searchBuilder: {
+    columns: ':visible', // Include only visible columns in SearchBuilder
+},
+"language": {
+    "lengthMenu": "Show _MENU_",
+    // "infoEmpty":     "<div class='alert alert-danger'>No data available in table.</div>"
+},
+"dom":
+    "<'row'" +
+    "<'col-sm-3 d-flex align-items-center justify-conten-start'l>" +
+    "<'col-sm-3 d-flex align-items-center justify-content-end'f>" +
+    "<'col-sm-6 d-flex align-items-center justify-content-end'B>" +
+    ">" +
+    "<'table-responsive'tr>" +
+    "<'row'" +
+    "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
+    "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
+    ">"
+// Add more default options as needed
 });
+*/
 // Function to focus on the text after the existing text
 const focusOnTextAfter = (input) => {
     // Replace 'textInput' with the actual ID of your input field
@@ -1414,7 +1439,10 @@ function save_ajax(form, url, validator) {
 function card_animation() {
     // log('yes')
     $('.card').removeClass('d-none');
-
+    $('.btn').tilt({
+        glare: true, maxGlare: .5
+    })
+    // localStorage.removeItem('cardAnimation');
     if (localStorage.getItem('cardAnimation')) { $('.card').closest('.row').addClass('animation animation-slide-in-down'); $(".animation-enabler").prop('checked', true); $('.animation-color-input').closest('.form-group').removeClass('d-none'); $('.card').addClass('card-animation').css('--animation-bg', localStorage.getItem('card-animation-bg') || 'teal'); }
     else {
         $('.card.shadow-sm').addClass('border-2 border-primary');
@@ -1435,7 +1463,7 @@ $(document).ready(function () {
         $('.card.shadow-sm').removeClass('border-2 border-primary');
     }
 
-    card_animation();
+    // card_animation();
     $('.animation-color-input').on('input', function () {
         localStorage.setItem('card-animation-bg', $(this).val());
         card_animation();
@@ -2051,7 +2079,7 @@ $(document).on('click', '.field-area a', function (d) {
     SwalWarning('Confirmation', 'Are You sure you want to remove this link', true).then((r) => {
         if (r.isConfirmed) {
             $(d.target).closest('div').remove();
-            SwalSuccess('Now Save This Form');
+            AryaNotify('Now Save The Form');
         }
     })
 });
@@ -2522,6 +2550,19 @@ $(document).on('submit', '.send-notification', function (e) {
 })
 $('#notification-table').DataTable({
     order: []
+})
+$(document).on('submit', '.login', function (e) {
+    e.preventDefault();
+    // alert(4);
+    $.AryaAjax({
+        url: 'admin-login',
+        data: new FormData(this)
+    }).then(res => {
+        showResponseError(res);
+        if (res.status) {
+            location.reload();
+        }
+    });
 })
 $(document).on('click', '.delete-notitication', function () {
     var tr = $(this).closest('tr');

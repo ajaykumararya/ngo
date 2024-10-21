@@ -1,4 +1,11 @@
 <input type="hidden" id="all-methods" value='<?= json_encode($this->ki_theme->modules_and_pages()) ?>'>
+<style>
+    .checkbox-wrapper li .form-check-input:checked[type="radio"], 
+    .radio-wrapper li .form-check-input:checked[type="radio"]{
+        background-color: transparent;
+        border: 2px solid #2b5e5e;
+    }
+</style>
 <form class="row " method="post" id="page_form">
     <div class="col-md-7">
         <div class="card shadow mb-5">
@@ -27,11 +34,32 @@
         </div>
     </div>
     <div class="col-md-5">
-        <div class="mb-3 text-center card main-card shadow">
+        <div class="mb-3 text-center card main-card shadow checkbox-checked">
             <div class="card-header p-8">
                 {publish_button}
             </div>
             <div class="card-body">
+
+                <div class="form-check radio radio-primary ps-0">
+                    <ul class="radio-wrapper">
+                        <li>
+                            <input class="form-check-input" id="radio-icon" type="radio" value="content"
+                                name="page_type" checked>
+                            <label class="form-check-label page_type" for="radio-icon"><i
+                                    class="fa fa-sliders"></i><span>Content</span></label>
+                        </li>
+                        <li>
+                            <input class="form-check-input page_type" id="radio-icon5" type="radio" value="link"
+                                name="page_type">
+                            <label class="form-check-label" for="radio-icon5"><i
+                                    class="fa fa-eye-slash"></i><span>Custom Link</span></label>
+                        </li>
+
+                    </ul>
+                </div>
+
+
+
                 <!--begin::Options-->
                 <div class="d-flex flex-stack gap-3 mw-lg-600px" data-kt-buttons="true"
                     data-kt-buttons-target=".form-check-image,.form-check-input">

@@ -49,10 +49,10 @@ class MY_Controller extends MX_Controller
             'current_url' => $this->my_current_url(),
             'publish_button' => $this->ki_theme->publish_button(),
             'search_button' => $this->ki_theme->save_button('Search', 'calendar-search', 4),
-            'save_button' => $this->ki_theme->set_class('save-btn')->save_button('Save', 'save-2'),
+            'save_button' => $this->ki_theme->set_class('save-btn')->save_button('Save', 'save'),
             'update_button' => $this->ki_theme->set_class('save-btn')->save_button('Save Changes', 'save-2'),
             'send_button' => $this->ki_theme->set_class('sen-btn')->save_button('Send', 'send'),
-            'card_class' => 'card shadow-sm ' . $adminCard . ' mb-5 ' . ($this->input->post() ? '' : 'd-none'),
+            'card_class' => 'card shadow-sm ' . $adminCard,// '.($this->input->post() ? '' : 'd-none'),
             'inr' => ' <span class="">₹</span> ',
             'current_date' => $this->ki_theme->date(),
             'theme_url' => theme_url(),
@@ -63,23 +63,23 @@ class MY_Controller extends MX_Controller
         $this->ki_theme->set_config_item('newicon', img(base_url('themes/newicon.gif')));
         $this->set_data('basic_header_link', $this->parse('site/common-header', [], true));
         // pre($this->public_data,true);
-        if ($this->center_model->isAdminOrCenter() || $this->center_model->isCoordinator()) {
-            $getCentre = $this->center_model->get_center($this->center_model->loginId(), $this->center_model->login_type());
-            $centreRow = $getCentre->row();
-            $this->public_data['center_data'] = $getCentre->row_array();
-            $this->set_data('profile_image', (file_exists('upload/' . $centreRow->image) ? base_url('upload/' . $centreRow->image) : base_url('assets/media/avatars/300-3.jpg')));
-            $this->set_data([
-                'owner_name' => $centreRow->name,
-                'owner_email' => $centreRow->email,
-                'owner_phone' => $centreRow->contact_number,
-                'owner_address' => $centreRow->center_full_address,
-                'owner_id' => $centreRow->id,
-                'type' => ucwords(str_replace('_', '-', $this->center_model->login_type())),
-                'wallet' => @$centreRow->wallet
-            ]);
-            // pre($centreRow,true);
-            $this->ki_theme->set_wallet(@$centreRow->wallet);
-        }
+        // if ($this->center_model->isAdminOrCenter() || $this->center_model->isCoordinator()) {
+        //     $getCentre = $this->center_model->get_center($this->center_model->loginId(), $this->center_model->login_type());
+        //     $centreRow = $getCentre->row();
+        //     $this->public_data['center_data'] = $getCentre->row_array();
+        //     $this->set_data('profile_image', (file_exists('upload/' . $centreRow->image) ? base_url('upload/' . $centreRow->image) : base_url('assets/media/avatars/300-3.jpg')));
+        //     $this->set_data([
+        //         'owner_name' => $centreRow->name,
+        //         'owner_email' => $centreRow->email,
+        //         'owner_phone' => $centreRow->contact_number,
+        //         'owner_address' => $centreRow->center_full_address,
+        //         'owner_id' => $centreRow->id,
+        //         'type' => ucwords(str_replace('_', '-', $this->center_model->login_type())),
+        //         'wallet' => @$centreRow->wallet
+        //     ]);
+        //     // pre($centreRow,true);
+        //     $this->ki_theme->set_wallet(@$centreRow->wallet);
+        // }
         $get = $this->db->select('id')->where('active_page', '1')->get('his_pages');
         if ($get->num_rows()) {
             defined('DefaultPage') or define('DefaultPage', $get->row("id"));

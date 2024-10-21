@@ -49,10 +49,10 @@
   $(".show-hide span").addClass("show");
   $(".show-hide span").click(function () {
     if ($(this).hasClass("show")) {
-      $('input[name="login[password]"]').attr("type", "text");
+      $('input[name="password"]').attr("type", "text");
       $(this).removeClass("show");
     } else {
-      $('input[name="login[password]"]').attr("type", "password");
+      $('input[name="password"]').attr("type", "password");
       $(this).addClass("show");
     }
   });
@@ -239,15 +239,15 @@
     });
   });
   function translate(tnum) {
-    $(".lan-1").text(trans[0][tnum]);
-    $(".lan-2").text(trans[1][tnum]);
-    $(".lan-3").text(trans[2][tnum]);
-    $(".lan-4").text(trans[3][tnum]);
-    $(".lan-5").text(trans[4][tnum]);
-    $(".lan-6").text(trans[5][tnum]);
-    $(".lan-7").text(trans[6][tnum]);
-    $(".lan-8").text(trans[7][tnum]);
-    $(".lan-9").text(trans[8][tnum]);
+    // $(".lan-1").text(trans[0][tnum]);
+    // $(".lan-2").text(trans[1][tnum]);
+    // $(".lan-3").text(trans[2][tnum]);
+    // $(".lan-4").text(trans[3][tnum]);
+    // $(".lan-5").text(trans[4][tnum]);
+    // $(".lan-6").text(trans[5][tnum]);
+    // $(".lan-7").text(trans[6][tnum]);
+    // $(".lan-8").text(trans[7][tnum]);
+    // $(".lan-9").text(trans[8][tnum]);
   }
   var trans = [
     {

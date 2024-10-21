@@ -631,7 +631,7 @@ class Ki_theme
             'title' => $title
         ])
             ->with_icon('subtitle', 5)->with_pulse('dark')
-            ->set_class('advanced-set-page btn btn-outline btn-outline-dashed btn-outline-dark btn-active-light-dark');
+            ->set_class('advanced-set-page btn btn-outline  btn-outline-dark btn-active-light-dark');
         return $this->button('');
     }
     function _attributes_to_string($attributes)
@@ -773,7 +773,7 @@ class Ki_theme
     }
     function outline_dashed_style($class = 'primary')
     {
-        return $this->set_attribute('class', "btn btn-outline btn-outline-dashed btn-outline-$class btn-active-light-$class");
+        return $this->set_attribute('class', "btn btn-outline  btn-outline-$class btn-active-light-$class");
     }
     function set_title($title, $force = false)
     {
@@ -949,7 +949,7 @@ class Ki_theme
             return $this->tag_html;
         return $this->tag_html($text);
     }
-    function save_button($text = 'Save', $icon = 'element-plus', $iconPath = 2, $class = 'btn btn-outline hover-rotate-end btn-outline-dashed btn-outline-success btn-active-light-success')
+    function save_button($text = 'Save', $icon = 'element-plus', $iconPath = 2, $class = 'btn btn-outline hover-rotate-end  btn-outline-success btn-active-light-success')
     {
         $iconType = is_int($iconPath) ? 'duotone' : $iconPath;
         if ($icon)
@@ -958,9 +958,9 @@ class Ki_theme
     }
     function with_pulse($class = 0, $type = 'prepend')
     {
-        $tagClass = 'pulse ' . ($class ? 'pulse-' . $class : '');
-        $this->set_attribute('class', trim($tagClass));
-        $this->tag_html('<span class="pulse-ring"></span>', $type);
+        // $tagClass = 'pulse ' . ($class ? 'pulse-' . $class : '');
+        // $this->set_attribute('class', trim($tagClass));
+        // $this->tag_html('<span class="pulse-ring"></span>', $type);
         return $this;
     }
     function with_icon($icon, $path = 2, $fs = 2, $type = 'duotone')
@@ -1047,13 +1047,13 @@ class Ki_theme
     private function __button($text, $class = '')
     {
     }
-    function publish_button($text = 'Publish', $icon = 'add-files', $clss = 'btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary', $ring = 'primary')
+    function publish_button($text = 'Publish', $icon = 'add-files', $clss = 'btn-outline  btn-outline-primary-2x btn-active-light-primary', $ring = 'primary')
     {
         $ringClass = $ring ? 'pulse pulse-' . $ring : '';
         $btn = '<button id="publish_btn" class="publish-btn btn ' . $clss . '  ' . $ringClass . ' rounded hover-elevate-up" >
                 <span class="indicator-label">
                     ' . ($ring ? '<span class="pulse-ring"></span> ' : '') . '
-                    ' . $this->keen_icon('add-files', 3) . '                  
+                    ' . $this->keen_icon('plus', 3) . '                  
                     ' . $text . '
                 </span>
                     <span class="indicator-progress">
@@ -1072,13 +1072,13 @@ class Ki_theme
     {
         return 'demo';
     }
-    function keen_icon($clss = '', $path = 2, $fs = 1, $type = 'outline', $nbsp = true)
+    function keen_icon($clss = '', $path = 2, $fs = 0, $type = 'fa', $nbsp = true)
     {
-        $icon = '<i class="ki-' . $type . ' ki-' . $clss . ' fs-' . $fs . '">';
-        if (is_numeric($path) and $type == 'duotone') {
-            for ($i = 1; $i <= $path; $i++)
-                $icon .= '<span class="path' . $i . '"></span>';
-        }
+        $icon = '<i class="fa fa-' . $clss . ' ">';
+        // if (is_numeric($path) and $type == 'duotone') {
+        //     for ($i = 1; $i <= $path; $i++)
+        //         $icon .= '<span class="path' . $i . '"></span>';
+        // }
         $icon .= '</i>';
         return $icon . ($nbsp ? "&nbsp;" : '');
     }
@@ -1154,9 +1154,9 @@ class Ki_theme
     }
     function get_menu()
     {
-        if ($this->CI->center_model->isCoordinator())
-            $adminMenu = $this->CI->load->config('coordinate/menu', true);
-        else
+        // if ($this->CI->center_model->isCoordinator())
+        //     $adminMenu = $this->CI->load->config('coordinate/menu', true);
+        // else
             $adminMenu = $this->CI->load->config('admin/menu', true);
         // pre($adminMenu,true);
         $this->adminMenu = $adminMenu;
@@ -1170,14 +1170,11 @@ class Ki_theme
                 }
             }
             if (isset($menus['title'])) {
-                $html .= '<!--begin:Menu item-->
-                            <div  class="menu-item" >
-                                <!--begin:Menu content-->
-                                <div  class="menu-content" >
-                                    <span class="menu-heading fw-bold text-uppercase fs-7">' . $menus['title'] . '</span>
+                $html .= '<li class="sidebar-main-title 3 ">
+                                <div>
+                                <h6 class="lan-1">' . $menus['title'] . '</h6>
                                 </div>
-                                <!--end:Menu content-->
-                            </div>';
+                            </li>';
             }
             $html .= $this->generateMenu($menus['menu'], 'menu', $menuType);
         }
@@ -1203,6 +1200,62 @@ class Ki_theme
         ], true);
     }
     function generateMenu($menuItems, $type = 'menu', $menuType = '')
+    {
+        $html = '';
+        foreach ($menuItems as $menuItem) {
+            $activeMenu = isset($menuItem['url']) ? $this->active_menu($menuItem['url']) : '';
+            if ($activeMenu != '') {
+                $this->set_title($menuItem['label']);
+            }
+            if (isset($menuItem['condition'])) {
+                if (!$menuItem['condition']) {
+                    continue;
+                }
+            }
+            $menuItemActive = (isset($menuItem['submenu']) ? $this->recursiveArraySearch($this->uri_string(), $menuItem['submenu']) : false);
+            
+            $html .= '<li class="'.($type == 'menu' ? 'sidebar-list ' : '').'">';
+            if ($type == 'menu') {
+                $html .= '<i class="fa fa-thumb-tack"></i>';                
+            }
+            $icon = '';
+            if($type == 'menu' && isset($menuItem['icon'])){
+              
+                if (isset($menuItem['icon']) and is_array($menuItem['icon'])) {
+                    list($icon, $path) = isset($menuItem['icon']) ? $menuItem['icon'] : ['element-11', 4];
+                    if ($activeMenu != '')
+                        $this->breadcrummb_icon($icon, $path);
+                } else {
+                    $icon = (isset($menuItem['icon']) ? $menuItem['icon'] : 'element-11');
+                    if ($activeMenu != '')
+                        $this->breadcrummb_icon($icon);
+                }
+                $icon = '<svg class="stroke-icon">
+                            <use href="'.base_url().'assets/svg/icon-sprite.svg#stroke-'.$icon.'"></use>
+                        </svg>
+                        <svg class="fill-icon">
+                            <use href="'.base_url().'assets/svg/icon-sprite.svg#fill-'.$icon.'"></use>
+                        </svg>';
+            }
+            if($type == 'submenu')
+                $html .= '<a class="'.$activeMenu.'" href="'.(isset($menuItem['submenu']) ? '#' : $this->gen_link(@$menuItem['url'])).'">';
+            else
+            $html .= '<a class="'.(isset($menuItem['submenu']) ? 'sidebar-link sidebar-title ' : ' sidebar-link sidebar-title  link-nav').' " href="'.(isset($menuItem['submenu']) ? '#' : $this->gen_link(@$menuItem['url'])).'">
+                                '.$icon;
+            $html .= '<span class="lan-3">' . $menuItem['label'] . '</span>';
+            
+            $html .= '</a>';
+            if (isset($menuItem['submenu'])) {
+                $html .= '<ul class="sidebar-submenu">';
+                $html .= $this->generateMenu($menuItem['submenu'], 'submenu', $menuType);
+                $html .= '</ul>';
+            }
+            $html .= '</li>';
+        }
+        return $html;
+    }
+
+    function generateMenu_oldTHEME($menuItems, $type = 'menu', $menuType = '')
     {
         $html = '';
         foreach ($menuItems as $menuItem) {
@@ -1335,7 +1388,7 @@ class Ki_theme
             $i = 0;
             foreach ($data['type'][$index_val] as $index => $val) {
                 $title = $data['title'][$index_val][$index];
-                $html .= '<label  id="proccess-' . $i . '" class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 mb-6">
+                $html .= '<label  id="proccess-' . $i . '" class="nav-link btn btn-outline  btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 mb-6">
                             <input type=hidden name="type[' . $index_val . '][]" value="' . $val . '">
                             <input type="hidden" class="title" name="title[' . $index_val . '][]" value="' . $title . '">';
                 $html .= "<input type='hidden' class='content' name='content[$index_val][]' value='" . ($data['content'][$index_val][$index]) . "'>";

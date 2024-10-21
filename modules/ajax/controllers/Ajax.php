@@ -43,27 +43,31 @@ class Ajax extends Ajax_Controller
     }
     function admin_login()
     {
-        $email = $this->input->post('email');
+        $email = $this->input->post('username');
         $password = sha1($this->input->post('password'));
-        $table = $this->db->where('email', $email)->get('centers');
-        if ($table->num_rows()) {
+        try {
+            $table = $this->db->where('username', $email)->get('login');
+            if ($table->num_rows()) {
 
-            $row = $table->row();
-            if (($row->status && $row->type == 'center') or $row->type == 'admin' or $row->type == 'co_ordinator') {
-                if ($row->password == $password) {
-                    $this->load->library('session');
-                    $this->session->set_userdata([
-                        'admin_login' => true,
-                        'admin_type' => $row->type,
-                        'admin_id' => $row->id
-                    ]);
-                    $this->response('status', 1);
+                $row = $table->row();
+                if (($row->status && $row->type == 'main')) {
+                    if ($row->password == $password) {
+                        $this->load->library('session');
+                        $this->session->set_userdata([
+                            'admin_login' => true,
+                            'admin_type' => $row->type,
+                            'admin_id' => $row->id
+                        ]);
+                        $this->response('status', 1);
+                    } else
+                        $this->response('error', alert('Sorry, the username or password is incorrect, please try again.', 'danger'));
                 } else
-                    $this->response('error', alert('Sorry, the email or password is incorrect, please try again.', 'danger'));
+                    $this->response('error', alert('Your Account is In-active. Please Contact Your Admin', 'danger'));
             } else
-                $this->response('error', alert('Your Account is In-active. Please Contact Your Admin', 'danger'));
-        } else
-            $this->response('error', alert('Sorry, this email  is not found..', 'danger'));
+                throw new Exception(alert('Sorry, this username  is not found..', 'danger'));
+        } catch (Exception $e) {
+            $this->response('error', $e->getMessage());
+        }
     }
     function delete_enquiry($id)
     {

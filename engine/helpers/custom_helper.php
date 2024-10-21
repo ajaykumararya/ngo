@@ -195,7 +195,7 @@ function sidebar_toggle($true, $false = '')
 function OnlyForAdmin()
 {
     $ci = &get_instance();
-    return $ci->session->userdata('admin_type') == 'admin';
+    return $ci->session->userdata('admin_type') == 'main';
 }
 function pre($array = [], $flg = false)
 {
