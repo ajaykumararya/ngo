@@ -118,9 +118,11 @@ class Assets extends MY_Controller
         $thisRef = [];
         $items = [];
         foreach ($query->result() as $k => $data) {
+            $isLink = start_with('http', $data->link);
             $thisRef['id'] = $data->id;
             $thisRef['link'] = $data->link;
-            $thisRef['type'] = start_with('http', $data->link) ? 'Link' : 'Content';
+            $thisRef['isLink'] = $isLink;
+            $thisRef['type'] = $isLink ? 'Link' : 'Content';
             $thisRef['isPrimary'] = $data->id == DefaultPage;
             $thisRef['url'] = $data->id == DefaultPage ? base_url() : ($data->link ? (start_with($data->link, 'http') ? $data->link : base_url($data->link)) : (base_url . '/web/' . AJ_ENCODE($data->id, true) . '/' . Print_page($data->page_name)));
             $thisRef['title'] = $data->page_name;

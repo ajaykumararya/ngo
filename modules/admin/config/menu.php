@@ -5,32 +5,62 @@ $config['dashboard'] = array(
         array('label' => 'Dashboard','icon' => array('user',2), 'type' => 'dashboard', 'url' => 'admin')
     )
 );
+$config['academics'] = array(
+    'title' => 'Academics',
+    'condition' => OnlyForAdmin(),
+    'menu' => array(
+        array(
+            'label' => 'Course Area',
+            'type' => 'course_area',
+            'icon' => array('learning', 2),
+            'submenu' => array(
+                array(
+                    'label' => 'Category',
+                    'type' => 'course_category',
+                    'icon' => array('note-2', 4),
+                    'url' => 'course/category',
+                ),
+                array(
+                    'label' => 'Manage Course',
+                    'type' => 'manage_course',
+                    'icon' => array('book', 4),
+                    'url' => 'course/manage',
+                ),
+                array(
+                    'label' => 'Manage Subject(s)',
+                    'type' => 'manage_subject',
+                    'icon' => array('book-open', 4),
+                    'url' => 'course/manage-subjects'
+                ),
+                array(
+                    'label' => 'Arrange Subjects',
+                    'type' => 'arrange_subject',
+                    'icon' => array('book-open', 4),
+                    'url' => 'course/arrange-subjects'
+                ),
+                /*
+                array(
+                    'label' => 'Manage Course Fee',
+                    'type' => 'manage_course_fee',
+                    'icon' => array('bill', 4),
+                    'url' => 'course/manage-fees',
+                ),
+                */
+            )
+        ),
+        array(
+            'label' => 'Session',
+            'type' => 'session_area',
+            'icon' => array('others', 4),
+            'url' => 'academic/session',
+        )
+    )
+);
 
 $config['cms_setting'] = array(
     'title' => 'CMS',
     'condition' => OnlyForAdmin(),
     'menu' => array(
-        array(
-            'label' => 'Manage Role User',
-            'icon' => array('people', 5),
-            'type' => 'manage_role_user',
-            'condition' => CHECK_PERMISSION('ROLE_SYSTEM'),
-            'submenu' => array(
-                array(
-                    'label' => 'Role Category',
-                    'type' => 'manage_role_category',
-                    'icon' => array('chart', 2),
-                    'url' => 'admin/manage-role-category',
-                ),
-                array(
-                    'label' => 'Manage User',
-                    'type' => 'manage_user',
-                    'icon' => array('people', 5),
-                    'url' => 'admin/manage-role-account'
-                )
-
-            )
-        ),
         array(
             'label' => 'Setting',
             'type' => 'cms_setting',
@@ -75,12 +105,12 @@ $config['cms_setting'] = array(
 
             )
         ),
-        array(
-            'label' => 'Enquiry Data',
-            'type' => 'enquiry_data',
-            'icon' => array('file', 4),
-            'url' => 'cms/enquiry-data'
-        ),
+        // array(
+        //     'label' => 'Enquiry Data',
+        //     'type' => 'enquiry_data',
+        //     'icon' => array('file', 4),
+        //     'url' => 'cms/enquiry-data'
+        // ),
         /*
         array(
             'label' => 'Gallery',
@@ -105,12 +135,12 @@ $config['cms_setting'] = array(
     )
 );
 $staticMenus = array(
-    array(
-        'label' => 'Forms',
-        'type' => 'static_forms',
-        'icon' => array('file', 4),
-        'url' => 'cms/forms'
-    )
+    // array(
+    //     'label' => 'Forms',
+    //     'type' => 'static_forms',
+    //     'icon' => array('file', 4),
+    //     'url' => 'cms/forms'
+    // )
 );
 if (file_exists(THEME_PATH . 'config/menu.php')) { {
         require THEME_PATH . 'config/menu.php';

@@ -22,7 +22,7 @@
             <div class="card-header">
                 <h3 class="card-title">List Slider Image(s)</h3>
             </div>
-            <div class="card-body p-3">
+            <div class="card-body">
                 <table id="list-slider" class="table table-bordered table-striped">
                     <thead>
                         <tr>

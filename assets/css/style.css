@@ -5738,7 +5738,7 @@ body.modal-open .select2-container--open .select2-dropdown {
   border-bottom: none;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  padding: 18px;
+  /* padding: 18px; */
   position: relative;
 }
 .card .card-header.card-no-border {
@@ -22380,7 +22380,7 @@ div.dataTables_wrapper table.dataTable tbody > tr > td:last-child {
 .select2-container .select2-selection--single {
   border-color: #eaeaea;
   border-radius: 0.25rem !important;
-  height: 47px !important;
+  height: 39px !important;
   padding: 10px;
 }
 .select2-container--default
@@ -39382,6 +39382,7 @@ footer p .footer-icon {
 }
 .select2-container {
   width: 100% !important;
+  height: 39px!important;
 }
 .select2-container.select2 .selection {
   display: block !important;
@@ -55014,4 +55015,16 @@ body.dark-only .custom_setting_input{
 }
 .form-control:focus, .form-select:focus {
   box-shadow: 0 0 0 2.2px rgba(43, 94, 94, .3) !important;
+}
+[data-validator]{
+  color: red;
+}
+.w-60px{
+  width: 60px!important;
+}
+.h-30px{
+  height: 30px;
+}
+.filepond--credits{
+  display: none!important;
 }

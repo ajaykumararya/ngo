@@ -308,23 +308,12 @@ function closeForm() {
                         </div>
                         <div class="col-md-3">
                             <div class="d-flex flex-row align-items-center justify-content-end social-icons">
-                                <ul class="social-icons list-inline">
-                                    <li><a href="#" class=" tooltip-top" data-tooltip="Phone"><i
-                                                class="fa fa-phone"></i></a>
-                                    </li>
-                                    <li><a href="#" class=" tooltip-top" data-tooltip="Whatsapp"><i
-                                                class="fab fa-whatsapp"></i></a>
-                                    </li>
-                                    <li><a href="https://www.instagram.com/londonbeautyacademy_official"
-                                            class=" tooltip-top" data-tooltip="Instagram"><i
-                                                class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li><a href="https://www.facebook.com/mylondonbeautyacademy" class=" tooltip-top"
-                                            data-tooltip="Facebook"><i class="fab fa-facebook"></i></a>
-                                    </li>
-                                    <li><a href="#" class=" tooltip-top" data-tooltip="Youtube"><i
-                                                class="fab fa-youtube"></i></a>
-                                    </li>
+                                <li class="social-icons list-inline">
+                                <li><a href="{facebook}" class="" target="_blank"><i class="fa fab fa-facebook"></i></a></li>
+                                <li><a href="{twitter}" class="" target="_blank"><i class="fa fab fa-twitter"></i></a></li>
+                                <li><a href="{youtube}" class=""><i class="fa fab fa-youtube"></i></a></li>
+                                <li><a href="{instagram}" class=""><i class="fa fab fa-instagram"></i></a></li>
+                                <li><a href="{linkedin}" class=""><i class="fa fab fa-linkedin"></i></a></li>
                                 </ul>
                             </div>
                         </div>

@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
                     render: function (data, type, row) {
                         // console.log(data);
                         return `<div class="btn-group">
-                                    <buttons class="btn btn-primary btn-xs btn-sm edit-record"><i class="ki-outline ki-pencil"></i> Edit</buttons>
+                                    <buttons class="btn btn-primary btn-sm edit-record"><i class="fa fa-edit"></i> Edit</buttons>
                                     ${deleteBtnRender(0, row.id)}
                                 </div>
                                 `;
@@ -60,36 +60,20 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
     }
     if (form) {
-        var validator = FormValidation.formValidation(
-            form,
-            {
-                fields: {
-                    title: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Enter A Valid Category Name'
-                            }
-                        }
-                    }
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.form-group',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-                    })
-                }
+        var validation = MyFormValidation(form);
+        validation.addField('title', {
+            validators: {
+                notEmpty: { message: 'Enter A Valid Category Name' }
             }
-        );
+        })
         form.addEventListener('submit', function (e) {
             // Prevent default button action
             e.preventDefault();
-            var test = save_ajax(form, save_url, validator);
-            test.done(function (data) {
-                // console.log(data);
-                table.DataTable().ajax.reload();
-            })
+            $.AryaAjax({
+                url: save_url,
+                data : new FormData(e.target),
+                validation : validation
+            }).then((res) => showResponseError(res));
         });
     }
 });

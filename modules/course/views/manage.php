@@ -55,7 +55,7 @@
                         </div>
 
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer pb-5">
                         {publish_button}
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div id="list" class="collapse show">
-                <div class="card-body">
+                <div class="card-body p-0">
 
                     <div class="table-responsive">
                         <!--begin::Datatable-->
@@ -106,7 +106,7 @@
                 </div>
             </div>
             <div id="list" class="collapse show">
-                <div class="card-body">
+                <div class="card-body p-0">
 
                     <div class="table-responsive">
                         <!--begin::Datatable-->

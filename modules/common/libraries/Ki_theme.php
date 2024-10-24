@@ -493,7 +493,7 @@ class Ki_theme
         if ($this->list_pages) {
             return $this->list_pages;
         } else {
-            $this->list_pages = json_decode(Modules::run('assets/json_pages'), true);
+            $this->list_pages = Modules::run('assets/list_pages');
             log_message('info', 'Json List Pages Initialized');
             return $this->list_pages;
         }
@@ -1047,13 +1047,13 @@ class Ki_theme
     private function __button($text, $class = '')
     {
     }
-    function publish_button($text = 'Publish', $icon = 'add-files', $clss = 'btn-outline  btn-outline-primary-2x btn-active-light-primary', $ring = 'primary')
+    function publish_button($text = 'Publish', $icon = 'add-files', $clss = 'btn-primary', $ring = 'primary')
     {
         $ringClass = $ring ? 'pulse pulse-' . $ring : '';
-        $btn = '<button id="publish_btn" class="publish-btn btn ' . $clss . '  ' . $ringClass . ' rounded hover-elevate-up" >
+        $btn = '<button id="publish_btn" class="publish-btn f-right btn ' . $clss . '  ' . $ringClass . ' rounded hover-elevate-up" >
                 <span class="indicator-label">
                     ' . ($ring ? '<span class="pulse-ring"></span> ' : '') . '
-                    ' . $this->keen_icon('plus', 3) . '                  
+                    ' . $this->keen_icon('upload', 3) . '                  
                     ' . $text . '
                 </span>
                     <span class="indicator-progress">

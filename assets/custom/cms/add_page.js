@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     // $('.page_setting').addClass('mm-active');
     // $('.add_page').addClass('mm-active');
     var link = '';
+    $(page_type[0]).attr('checked',true);
    page_type.change(function () {
         $('.all-div').find('.alert').remove();
 

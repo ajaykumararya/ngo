@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
                     orderable : false,
                     render: function (data, type, row) {
                         return `<div class="form-check form-switch form-check-custom form-check-solid me-10">
-                                    <input class="form-check-input check-status" ${data == 1 ? 'checked' : ''} type="checkbox" value="${row.id}"/>                                    
+                                    <input class="form-check-input check-status" ${data == 1 ? 'checked' : ''} type="checkbox" value="${row.id}" style="width:40px;height:20px"/>                                    
                                 </div>`;
                     }
                 },
@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', function (e) {
                     render: function (data, type, row) {
                         // console.log(data);
                         return `<div class="btn-group">
-                                    <buttons class="btn btn-primary btn-xs btn-sm edit-record"><i class="ki-outline ki-pencil"></i> Edit</buttons>
-                                    ${deleteBtnRender(0, row.id)}
+                                    <buttons class="btn btn-primary btn-sm edit-record"><i class="fa fa-edit"></i> Edit</buttons>
+                                    ${deleteBtnRender(1, row.id)}
                                 </div>
                                 `;
                     }
@@ -88,12 +88,15 @@ document.addEventListener('DOMContentLoaded', function (e) {
                     }
                 },
                 plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.form-group',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-                    })
+                    trigger: new FormValidation.plugins.Trigger(),                    
+                    submitButton: new FormValidation.plugins.SubmitButton(),
+                    message: new FormValidation.plugins.Message({
+                        container: function (field, element) {
+                            // Append error message after the form field
+
+                            return element.parentElement;
+                        }
+                    }),
                 }
             }
         );

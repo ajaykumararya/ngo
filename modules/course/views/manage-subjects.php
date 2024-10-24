@@ -29,8 +29,8 @@
                             <div class="col-md-3">
                                 <div class="form-group set-duration">
                                     <input type="hidden" name="duration_type">
-                                    <label for="course_duration" class="form-label required">Select Duration in
-                                        <?= $this->ki_theme->course_duration('implode', ' / ') ?>
+                                    <label for="course_duration" class="form-label required">Duration
+                                        (<?= $this->ki_theme->course_duration('implode', ' / ') ?>)
                                     </label>
                                     <select name="duration" data-control="select2" data-placeholder="Select duration"
                                         id="course_duration" class="form-select ">
@@ -52,93 +52,84 @@
                                         name="subject_code">
                                 </div>
                             </div>
-                            <!--begin::Input group-->
-                            <div class="mt-10 col-md-2 mb-5">
-                                <!--begin::Label-->
-                                <label class="required fw-semibold fs-6 mb-5">Subject Type</label>
-                                <!--end::Label-->
-                                <!--begin::Input row-->
-                                <div class="d-flex flex-column fv-row">
-                                    <!--begin::Radio-->
-                                    <div class="form-check form-check-custom form-check-solid mb-5">
-                                        <!--begin::Input-->
-                                        <input class="form-check-input me-3" name="subject_type" type="radio"
-                                            value="theory" id="kt_docs_formvalidation_radio_option_1" />
-                                        <!--end::Input-->
-                                        <!--begin::Label-->
-                                        <label class="form-check-label" for="kt_docs_formvalidation_radio_option_1">
-                                            <div class="fw-semibold text-gray-800">Theory</div>
-                                        </label>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Radio-->
-                                    <!--begin::Radio-->
-                                    <div class="form-check form-check-custom form-check-solid mb-5">
-                                        <!--begin::Input-->
-                                        <input class="form-check-input me-3" name="subject_type" type="radio"
-                                            value="practical" id="kt_docs_formvalidation_radio_option_2" />
-                                        <!--end::Input-->
-                                        <!--begin::Label-->
-                                        <label class="form-check-label" for="kt_docs_formvalidation_radio_option_2">
-                                            <div class="fw-semibold text-gray-800">Practical</div>
-                                        </label>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Radio-->
-                                    <!--begin::Radio-->
-                                    <div class="form-check form-check-custom form-check-solid">
-                                        <!--begin::Input-->
-                                        <input class="form-check-input me-3" name="subject_type" type="radio"
-                                            value="both" id="kt_docs_formvalidation_radio_option_3" checked />
-                                        <!--end::Input-->
-                                        <!--begin::Label-->
-                                        <label class="form-check-label" for="kt_docs_formvalidation_radio_option_3">
-                                            <div class="fw-semibold text-gray-800">Both</div>
-                                        </label>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Radio-->
-                                </div>
-                                <!--end::Input row-->
-                            </div>
-                            <!--end::Input group-->
-                            <div class="col-md-10 mt-10">
-                                <div class="row theory_box both_box mb-4">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="" class="form-label">Theory Max Marks</label>
-                                            <input type="text" name="theory_max_marks" placeholder=" Theory Max Marks"
-                                                class="form-control" value="100">
+                            <div class="card card-flush border-primary  mt-3">
+                                <div class="card-body">
+                                    <div class="row m-0 p-0">
+                                        <!--begin::Input group-->
+                                        <div class="col-md-2 ">
+                                            <!--begin::Label-->
+                                            <label class="required fw-semibold fs-6 mb-5">Subject Type</label>
+                                            <!--end::Label-->
+
+                                            <div class="form-check radio radio-primary ps-0">
+                                                <ul class="radio-wrapper">
+
+
+                                                    <li>
+                                                        <input class="form-check-input " checked id="radio-iconb"
+                                                            type="radio" value="both" name="subject_type">
+                                                        <label class="form-check-label" for="radio-iconb"><i
+                                                                class="fa fa-eye-slash"></i><span>Both</span></label>
+                                                    </li>
+                                                    <li>
+                                                        <input class="form-check-input" id="radio-icon" type="radio"
+                                                            value="theory" name="subject_type">
+                                                        <label class="form-check-label" for="radio-icon"><i
+                                                                class="fa fa-sliders"></i><span>Theory</span></label>
+                                                    </li>
+                                                    <li>
+                                                        <input class="form-check-input" id="radio-icon5" type="radio"
+                                                            value="practical" name="subject_type">
+                                                        <label class="form-check-label" for="radio-icon5"><i
+                                                                class="fa fa-eye-slash"></i><span>Practical</span></label>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="" class="form-label">Theory Min Marks</label>
-                                            <input type="text" name="theory_min_marks" placeholder=" Theory Min Marks"
-                                                class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row practical_box both_box">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="" class="form-label">Practical Max Marks</label>
-                                            <input type="text" name="practical_max_marks"
-                                                placeholder=" Practical Max Marks" class="form-control" value="100">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="" class="form-label">Practical Min Marks</label>
-                                            <input type="text" name="practical_min_marks"
-                                                placeholder=" Practical Min Marks" class="form-control">
+                                        <!--end::Input group-->
+                                        <div class="col-md-10">
+                                            <div class="row theory_box both_box mb-4">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="" class="form-label">Theory Max Marks</label>
+                                                        <input type="text" name="theory_max_marks"
+                                                            placeholder=" Theory Max Marks" class="form-control"
+                                                            value="100">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="" class="form-label">Theory Min Marks</label>
+                                                        <input type="text" name="theory_min_marks"
+                                                            placeholder=" Theory Min Marks" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row practical_box both_box">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="" class="form-label">Practical Max Marks</label>
+                                                        <input type="text" name="practical_max_marks"
+                                                            placeholder=" Practical Max Marks" class="form-control"
+                                                            value="100">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="" class="form-label">Practical Min Marks</label>
+                                                        <input type="text" name="practical_min_marks"
+                                                            placeholder=" Practical Min Marks" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer pb-5">
                         {publish_button}
                     </div>
                 </div>
@@ -182,7 +173,8 @@
     <div class="col-md-12 mt-4">
         <div class="{card_class}">
             <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-list text-dark fw-bold fs-1"></i> &nbsp; List All Deleted Subjects</h3>
+                <h3 class="card-title"><i class="fa fa-list text-dark fw-bold fs-1"></i> &nbsp; List All Deleted
+                    Subjects</h3>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

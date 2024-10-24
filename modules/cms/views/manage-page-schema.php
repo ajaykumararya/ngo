@@ -58,7 +58,7 @@
         <form action="" id="save-schema">
             <div class="{card_class}">
                 <div class="card-header">
-                    <h3 class="card-title">Manage Schema</h3>
+                    <h3 class="card-title f-left">Manage Schema</h3>
                     <div class="card-toolbar">
                         {save_button}
                     </div>

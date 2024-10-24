@@ -5,14 +5,10 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="Zono admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
-  <meta name="keywords"
-    content="admin template, Zono admin template, dashboard template, flat admin template, responsive admin template, web app">
-  <meta name="author" content="pixelstrap">
+
   <link rel="icon" href="{base_url}assets/images/favicon.png" type="image/x-icon">
   <link rel="shortcut icon" href="{base_url}assets/images/favicon.png" type="image/x-icon">
-  <title>Zono - Premium Admin Template</title>
+  <title><?= $this->ki_theme->get_title() ?> - Admin Panel</title>
   <!-- Google font -->
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
@@ -34,6 +30,12 @@
   <link rel="stylesheet" type="text/css" href="{base_url}assets/css/vendors/slick-theme.css">
   <link rel="stylesheet" type="text/css" href="{base_url}assets/css/vendors/scrollbar.css">
   <link rel="stylesheet" type="text/css" href="{base_url}assets/css/vendors/animate.css">
+  <link rel="stylesheet" type="text/css" href="{base_url}assets/css/vendors/datatables.css">
+  <link rel="stylesheet" type="text/css" href="{base_url}assets/css/vendors/dropzone.css">
+  <link rel="stylesheet" type="text/css" href="{base_url}assets/css/vendors/filepond.css">
+  <link rel="stylesheet" type="text/css" href="{base_url}assets/css/vendors/filepond-plugin-image-preview.css">
+
+  <link rel="stylesheet" type="text/css" href="{base_url}assets/css/vendors/datatable-extension.css">
   <!-- Plugins css Ends-->
   <!-- Bootstrap css-->
   <link rel="stylesheet" type="text/css" href="{base_url}assets/css/vendors/bootstrap.css">
@@ -45,9 +47,16 @@
   <script>var base_url = '{base_url}';</script>
   <!-- latest jquery-->
   <script src="{base_url}assets/js/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+  <script src="https://mark-freq32.c9.io/mark3/js/jquery.ui.touch-punch.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.all.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.min.css" rel="stylesheet">
   <script src="{base_url}assets/js/notify/bootstrap-notify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
+  <script src="{base_url}assets/custom/jquery.nestable.js"></script>
+  <link rel="stylesheet" href="{base_url}assets/custom/custom.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 
 <body>
@@ -225,6 +234,24 @@
           </div>
         </div>
       </footer>
+      <div class="modal fade" tabindex="-1" id="mymodal">
+        <form class="modal-dialog  modal-dialog-centered  modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 title" id="mdModalLabel">Full screen below md</h1>
+              <button class="btn-close py-0" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body body">
+              <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline hover-rotate-end btn-outline-dashed btn-outline-danger"
+                data-bs-dismiss="modal">Close</button>
+              {update_button}
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -247,10 +274,36 @@
   <script src="{base_url}assets/js/header-slick.js"></script>
   <!-- Plugins JS Ends-->
   <script src="{base_url}assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/dataTables.buttons.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/jszip.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/buttons.colVis.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/pdfmake.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/vfs_fonts.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/dataTables.autoFill.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/dataTables.select.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/buttons.bootstrap4.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/buttons.html5.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/buttons.print.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/dataTables.bootstrap4.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/dataTables.responsive.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/responsive.bootstrap4.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/dataTables.keyTable.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/dataTables.colReorder.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/dataTables.fixedHeader.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/dataTables.rowReorder.min.js"></script>
+  <script src="{base_url}assets/js/datatable/datatable-extension/dataTables.scroller.min.js"></script>
+  <script src="{base_url}assets/js/dropzone/dropzone.js"></script>
+  <script src="{base_url}assets/js/dropzone/dropzone-script.js"></script>
+  <script src="{base_url}assets/js/filepond/filepond-plugin-image-preview.js"></script>
+  <script src="{base_url}assets/js/filepond/filepond-plugin-file-rename.js"></script>
+  <script src="{base_url}assets/js/filepond/filepond-plugin-image-transform.js"></script>
+  <script src="{base_url}assets/js/filepond/filepond.js"></script>
+  <script src="{base_url}assets/js/popular.min.js"></script>
   <!-- Theme js-->
   <script src="{base_url}assets/js/script.js"></script>
   <script src="{base_url}assets/js/theme-customizer/customizer.js"></script>
   <script src="{base_url}assets/custom/custom.js"></script>
+  {js_file}
   <!-- Plugin used-->
 </body>
 

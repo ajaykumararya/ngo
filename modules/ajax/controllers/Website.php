@@ -6,6 +6,9 @@ class Website extends Ajax_Controller
     {
         $this->_update_profile('students');
     }
+    function upload_gallery_image(){
+        $this->response('data',$_FILES);
+    }
     public function fetch_attendance()
     {
         $roll_no = $this->post('roll_no'); // Assuming student is logged in

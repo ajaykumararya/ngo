@@ -261,12 +261,17 @@
   white-space: nowrap;
   overflow: hidden;
   border: 1px solid black;
-  background: #ff0202;
-  background: -webkit-linear-gradient(right, #ff0202 0%, black 62%);
-  background: -moz-linear-gradient(right, #ff0202 0%, black 62%);
-  background: linear-gradient(right, #ff0202 0%, black 62%);
+  /* background: #372363; */
+  background: -webkit-linear-gradient(right, #372363 0%, black 52%);
+  background: -moz-linear-gradient(right, #372363 0%, black 52%);
+  background: linear-gradient(right, #372363 0%, black 52%);
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+body.dark-only .dd3-handle{
+  background: -webkit-linear-gradient(right, #372363 0%, rgb(113, 106, 106) 52%);
+  background: -moz-linear-gradient(right, #372363 0%, rgb(156, 145, 145) 52%);
+  background: linear-gradient(right, #372363 0%, rgb(157, 146, 146) 52%);
 }
 .dd3-handle:before {
   content: "=";

@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     const logo_form = document.getElementById("update-logo");
     const view_logo = $('#logo');
 
+    log('yyyyy');
     const list_slider = $('#list-slider');
     var validation = MyFormValidation(logo_form);
     validation.addField('image', {
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
             notEmpty: { message: 'Please Select Image..' }
         }
     })
-    // log(validation);
+    log(validation);
     logo_form.addEventListener('submit', function (e) {
         e.preventDefault();
         // log(formDataToObject(new FormData(this)));

@@ -7,7 +7,7 @@
                 </div>
                 <div class="card-body p-3">
                     <div class="form-group">
-                        <label for="image" class="form-label mb-4 required">Logo</label>
+                        <label for="image" class="form-label mb-2 required">Logo</label>
                         <input type="file" name="image" id="image" class="form-control">
                     </div>
                     <div class="form-group">
@@ -24,42 +24,37 @@
         </form>
     </div>
     <div class="col-md-4">
-        <form action="" class="setting-update">
+        <form action="" class="setting-update needs-validation">
             <div class="{card_class}">
                 <div class="card-header">
                     <h3 class="card-title">Update Title</h3>
                 </div>
                 <div class="card-body p-3">
-                    <div class="form-group mb-4">
-                        <?php
-                        $sitetitle = $this->SiteModel->get_setting('title');
-                        ?>
-                        <label for="slogo" class="form-label required">Enter Login Page Slogan </label>
-                        <textarea name="login_title" id="slogo" class="form-control"
-                            placeholder="Enter Title"><?= ES('login_title', $sitetitle) ?></textarea>
-                    </div>
-                    <div class="form-group mb-4">
+                    <?php
+                    $sitetitle = $this->SiteModel->get_setting('title');
+                    ?>
+                    <div class="form-group mb-2">
                         <label for="image" class="form-label required">Enter Title</label>
                         <textarea name="title" id="image" class="form-control"
                             placeholder="Enter Title"><?= $sitetitle ?></textarea>
                     </div>
-                    <div class="form-group mb-4">
+                    <div class="form-group mb-2">
                         <label for="email" class="form-label required">Enter Email</label>
                         <input value="<?= $this->SiteModel->get_setting('email') ?>" type="email" required name="email"
                             id="email" placeholder="Enter Email" class="form-control">
                     </div>
-                    <div class="form-group mb-4">
+                    <div class="form-group mb-2">
                         <label for="number" class="form-label required">Enter Mobile</label>
                         <input value="<?= $this->SiteModel->get_setting('number') ?>" type="text" required name="number"
                             id="number" placeholder="Enter Mobile" class="form-control">
                     </div>
-                    <div class="form-group mb-4">
+                    <div class="form-group mb-2">
                         <label for="wnumber" class="form-label required">Enter Whatsapp No.</label>
                         <input value="<?= $this->SiteModel->get_setting('whatsapp_number') ?>" type="text" required
                             name="whatsapp_number" id="wnumber" placeholder="Enter Whatsapp Number"
                             class="form-control">
                     </div>
-                    <div class="form-group mb-4">
+                    <div class="form-group mb-2">
                         <label for="address" class="form-label required">Enter Address</label>
                         <textarea name="address" id="address" class="form-control"
                             placeholder="Enter Address"><?= $this->SiteModel->get_setting('address') ?></textarea>
@@ -67,7 +62,7 @@
                     <?php
                     if (PATH == 'sewaedu') {
                         ?>
-                        <div class="form-group mb-4">
+                        <div class="form-group mb-2">
                             <label for="a_address" class="form-label required">Enter Alternate Address</label>
                             <textarea name="alternate_address" id="a_address" class="form-control"
                                 placeholder="Enter Alternate Address"><?= $this->SiteModel->get_setting('alternate_address') ?></textarea>
@@ -89,7 +84,7 @@
                     <h3 class="card-title">Social Links</h3>
                 </div>
                 <div class="card-body">
-                    <div class="form-group mb-4">
+                    <div class="form-group mb-2">
                         <label class="form-label">Facebook Link</label>
                         <div class="input-group">
                             <div class="input-group-text"><img
@@ -99,7 +94,7 @@
                                 value="<?= $this->SiteModel->get_setting('facebook') ?>" autocomplete="off">
                         </div>
                     </div>
-                    <div class="form-group mb-4">
+                    <div class="form-group mb-2">
                         <label class="form-label">Instagram Link</label>
                         <div class="input-group">
                             <div class="input-group-text"><img
@@ -109,7 +104,7 @@
                                 value="<?= $this->SiteModel->get_setting('instagram') ?>">
                         </div>
                     </div>
-                    <div class="form-group mb-4">
+                    <div class="form-group mb-2">
                         <label class="form-label">Twitter Link</label>
                         <div class="input-group">
                             <div class="input-group-text"><img
@@ -119,7 +114,7 @@
                                 value="<?= $this->SiteModel->get_setting('twitter') ?>">
                         </div>
                     </div>
-                    <div class="form-group mb-4">
+                    <div class="form-group mb-2">
                         <label class="form-label">LinkedIn Link</label>
                         <div class="input-group">
                             <div class="input-group-text"><img
@@ -129,7 +124,7 @@
                                 value="<?= $this->SiteModel->get_setting('linkedin') ?>">
                         </div>
                     </div>
-                    <div class="form-group mb-4">
+                    <div class="form-group mb-2">
                         <label class="form-label">Youtube Link</label>
                         <div class="input-group">
                             <div class="input-group-text"><img
@@ -139,7 +134,7 @@
                                 value="<?= $this->SiteModel->get_setting('youtube') ?>">
                         </div>
                     </div>
-                    <!-- <div class="form-group mb-4">
+                    <!-- <div class="form-group mb-2">
                         <label class="form-label">Pinterest Link</label>
                         <div class="input-group">
                             <div class="input-group-text"><img
@@ -148,7 +143,7 @@
                             <input type="text" class="form-control" name="pinterest" value="">
                         </div>
                     </div>
-                    <div class="form-group mb-4">
+                    <div class="form-group mb-2">
                         <label class="form-label">Telegram Link</label>
                         <div class="input-group">
                             <div class="input-group-text">
@@ -172,7 +167,7 @@
 </div>
 <?php
 if (THEME == 'theme-03') {
-    echo '<div class="row mb-4 mt-4">
+    echo '<div class="row mb-2 mt-4">
             <div class="col-md-12">
                 <div class="alert alert-success d-flex align-items-center p-5 mb-10">
                     <i class="ki-duotone ki-shield-tick fs-2hx text-success me-4"><span class="path1"></span><span class="path2"></span></i>                    <div class="d-flex flex-column">
@@ -191,7 +186,7 @@ if (THEME == 'theme-03') {
 $header_sections = $this->ki_theme->config('header_sections');
 if ($header_sections) {
     ?>
-    <div class="row mb-4">
+    <div class="row mb-2">
         <div class="col-md-12">
             <h1 class="anchor fw-bold mb-5">Header Section</h1>
         </div>
@@ -200,7 +195,7 @@ if ($header_sections) {
             $data_index = $index . '_links';
             ?>
             <div class="col-md-4">
-                <form action="" class="extra-setting-form mb-4">
+                <form action="" class="extra-setting-form mb-2">
                     <div class="{card_class}">
                         <div class="card-header">
                             <h3 class="card-title">
@@ -216,7 +211,7 @@ if ($header_sections) {
                                 foreach ($fields as $value) {
                                     $my_index = $value->title;
                                     $value = $value->link;
-                                    echo '<div class="form-group position-relative mb-4 sortable-item">
+                                    echo '<div class="form-group position-relative mb-2 sortable-item">
                                             <input type="text" name="title[]" placeholder="Enter Title" class="form-control border border-primary border-bottom-0 br-none p-2" value="' . $my_index . '">
                                             <input type="text" name="value[]" placeholder="Enter Value" class="form-control border border-primary border-bottom-0 br-none p-2" autocomplete="off" value="' . $value . '">
                                             <a href="javascript:;" class="btn border-1 border-danger border btn-light-danger h-25px lh-0 w-100 br-none p-2"><i class="ki-outline ki-trash"></i> Delete</a>
@@ -292,7 +287,7 @@ if ($footer_sections) {
                                 foreach ($fields as $value) {
                                     $my_index = $value->title;
                                     $value = $value->link;
-                                    echo '<div class="form-group position-relative mb-4">
+                                    echo '<div class="form-group position-relative mb-2">
                                             <input type="text" name="title[]" placeholder="Enter Title" class="form-control border border-primary border-bottom-0 br-none p-2" value="' . $my_index . '">
                                                <input type="text" name="value[]" placeholder="Enter Value" class="form-control border border-primary border-bottom-0 br-none p-2" autocomplete="off" value="' . $value . '">
                                             <a href="javascript:;" class="btn border-1 border-danger border btn-light-danger h-25px lh-0 w-100 br-none p-2"><i class="ki-outline ki-trash"></i> Delete</a>
@@ -316,7 +311,7 @@ if ($footer_sections) {
     <?php
 }
 ?>
-<!-- <div class="form-group bg-primary p-2 position-relative mb-4">
+<!-- <div class="form-group bg-primary p-2 position-relative mb-2">
                                 <input type="text" placeholder="Enter Title" class="form-control br-none p-2">
                                 <input type="text" placeholder="Enter Value" class="form-control br-none p-2" autocomplete="off">
                                 <a href="javascript:;" class="btn btn-light-danger h-25px lh-0 w-100 br-none p-2"><i class="ki-outline ki-trash"></i> Delete</a>

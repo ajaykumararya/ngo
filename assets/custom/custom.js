@@ -9,7 +9,9 @@ const emptyOption = '<option></option>';
 const myeditor = $(".aryaeditor");
 const ki_modal = $('#mymodal');
 const defaultStudent = base_url + 'assets/media/student.png';
-const ajax_url = `${base_url}ajax/`;
+
+if (typeof ajax_url == 'undefined')
+    var ajax_url = `${base_url}ajax/`;
 
 /*
 Handlebars.registerHelper('stripHTML', function(text) {
@@ -21,26 +23,48 @@ Handlebars.registerHelper('stripHTML', function(text) {
 // console.log(typeof content_css);
 
 const AryaNotify = (message = 'Hello', type = 'theme') => {
-    return $.notify(`<i class="fa fa-bell-o"></i><strong>${message}</strong>`, {
-        type: type,
-        allow_dismiss: true,
-        delay: 2000,
-        showProgressbar: true,
-        timer: 300,
-        animate: {
-            enter: "animated fadeInDown",
-            exit: "animated fadeOutUp",
-        },
-    });
+    if (typeof ($.notify) == 'function') {
+        return $.notify(`<i class="fa fa-bell-o"></i><strong>${message}</strong>`, {
+            type: type,
+            allow_dismiss: true,
+            delay: 2000,
+            showProgressbar: type == 'theme',
+            timer: 300,
+            animate: {
+                enter: "animated fadeInDown",
+                exit: "animated fadeOutUp",
+            },
+        });
+    }
 }
-var notify = AryaNotify('Loding.. page Do not close this page...');
-setTimeout(function () {
-    notify.update(
-        "message",
-        '<i class="fa fa-bell-o"></i><strong>Loading</strong> Inner Data.'
-    );
-    card_animation();
-}, 1000);
+console.log((typeof ($.notify) == 'function') ? 'YES' : 'NO');
+if (typeof ($.notify) == 'function') {
+    var notify = AryaNotify('Loding.. page Do not close this page...');
+    setTimeout(function () {
+        notify.update(
+            "message",
+            '<i class="fa fa-bell-o"></i><strong>Loading</strong> Inner Data.'
+        );
+        card_animation();
+    }, 1000);
+   
+}
+const toastr = (function () {
+    return {
+        success: function (message) {
+            AryaNotify(message, 'success');
+        },
+        error: function (message) {
+            AryaNotify(message, 'danger');
+        },
+        warning: function (message) {
+            AryaNotify(message, 'warning');
+        },
+        info: function (message) {
+            AryaNotify(message, 'info');
+        }
+    };
+})();
 var MYEditorCss = [];
 // $.each(content_css, function (i, n) {
 //     MYEditorCss.push(n);
@@ -367,6 +391,7 @@ const formDataObject = (form) => {
 const myModel = async (title, body, submitUrl = 0) => {
     var deferred = $.Deferred();
     if (typeof submitUrl == 'string' && submitUrl) {
+        // alert(submitUrl)
         ki_modal.find('form').submit(function (r) {
             r.preventDefault();
             $.AryaAjax({
@@ -888,15 +913,16 @@ const generateSHA1Hash = (input) => {
         return hashHex;
     });
 }
-const small_dom = "<'row'" +
-    "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
-    "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-    ">" +
-    "<'table-responsive'tr>" +
-    "<'row'" +
-    "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-    "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-    ">";
+const small_dom = 'Bfrtip';// '<"wrapper"ltipf>';
+// const small_dom = "<'row'" +
+//     "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
+//     "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
+//     ">" +
+//     "<'table-responsive'tr>" +
+//     "<'row'" +
+//     "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
+//     "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
+//     ">";
 /*
 $.extend(true, $.fn.dataTable.defaults, {
 // Your default options go here
@@ -1028,12 +1054,12 @@ function SwalUpdateLoading(message) {
     })
 }
 var deleteBtnRender = (td = 0, id = 0, message = '') => {
-    return `<buton class="btn btn-danger btn-sm" data-message="${message}" data-table-filter="delete_row" data-target="${td}" data-id="${id}"><i class="ki-outline ki-trash"></i> Delete</buton>`;
+    return `<buton class="btn btn-danger btn-sm" data-message="${message}" data-table-filter="delete_row" data-target="${td}" data-id="${id}"><i class="fa fa-trash"></i> Delete</buton>`;
 }
 const generate_link_btn = (id, type) => {
     return `<button data-id="${id}" data-type="${type}" class="btn click-to-view-link btn-light-primary pulse btn-sm">
-    <span class="pulse-ring"></span>
-        <i class="ki-outline ki-eye fs-1"></i> View
+   
+        <i class="fa fa-eye"></i> View
     </button>`;
 }
 const showResponseError = (response) => {
@@ -1051,18 +1077,27 @@ const MyFormValidation = (form) => {
         {
             plugins: {
                 trigger: new FormValidation.plugins.Trigger(),
-                bootstrap: new FormValidation.plugins.Bootstrap5({
-                    rowSelector: ".form-group",
-                    eleInvalidClass: "",
-                    eleValidClass: ""
+                // tachyons: new FormValidation.plugins.Tachyons(),
+                submitButton: new FormValidation.plugins.SubmitButton(),
+                message: new FormValidation.plugins.Message({
+                    container: function (field, element) {
+                        // Append error message after the form field
+
+                        return element.parentElement;
+                    }
                 }),
-                // excluded: new FormValidation.plugins.Excluded({
-                //     excluded: function (field, ele, eles) {
-                //         if (form.querySelector('[name="' + field + '"]') === null) {
-                //             return true;
-                //         }
-                //     },
+                // bootstrap: new FormValidation.plugins.Bootstrap({
+                //     rowSelector: ".form-group",
+                //     eleInvalidClass: "",
+                //     eleValidClass: ""
                 // }),
+                excluded: new FormValidation.plugins.Excluded({
+                    excluded: function (field, ele, eles) {
+                        if (form.querySelector('[name="' + field + '"]') === null) {
+                            return true;
+                        }
+                    },
+                }),
             }
         }
     );
@@ -1105,13 +1140,11 @@ var handleDeleteRows = (url) => {
                 }
             }).then(function (result) {
                 if (result.value) {
-                    SwalShowloading();
-                    axios.post(
-                        ajax_url + url + '/' + id
-                    ).then(function (e) {
-                        log(e);
-                        // console.log(e);  
-                        if (e.data.status) {
+                    // SwalShowloading();
+                    $.AryaAjax({
+                        url: `${url}/${id}`,
+                    }).then(e => {
+                        if (e.status) {
                             toastr.success('Record Deleted Successfully.');
                             SwalSuccess('Record Deleted Successfully..');
                             parent.remove();
@@ -1119,7 +1152,7 @@ var handleDeleteRows = (url) => {
                         else {
                             Swal.fire({
                                 text: 'Please Check It.',
-                                html: e.data.html,
+                                html: e.html,
                                 icon: "warning",
                                 buttonsStyling: !1,
                                 confirmButtonText: "Ok, got it!",
@@ -1128,19 +1161,8 @@ var handleDeleteRows = (url) => {
                                 },
                             });
                         }
-                        deferred.resolve(e.data);
-                    })
-                        .catch(function (t) {
-                            warn(t.message);
-                            warn(t.response.data);
-                            Swal.fire({
-                                text: "Sorry, looks like there are some errors detected, please try again.",
-                                icon: "error",
-                                buttonsStyling: !1,
-                                confirmButtonText: "Ok, got it!",
-                                customClass: { confirmButton: "btn btn-primary" },
-                            });
-                        })
+                        deferred.resolve(e);
+                    });
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         html: customerName + " was not deleted.",
@@ -1381,56 +1403,37 @@ function save_ajax(form, url, validator) {
                 // $(submitButton).attr('data-kt-indicator', 'on').prop('disabled', true);
                 submitButton.setAttribute("data-kt-indicator", "on");
                 submitButton.disabled = true;
-                axios
-                    .post(
-                        ajax_url + url,
-                        new FormData(form)
-                    )
-                    .then(function (e) {
-                        returnData = e.data;
-                        // console.log(returnData);
-                        deferred.resolve(returnData);
-                        if (returnData.status) {
-                            form.reset(),
-                                Swal.fire({
-                                    text: returnData.html,
-                                    icon: "success",
-                                    buttonsStyling: !1,
-                                    confirmButtonText: "Ok, got it!",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary",
-                                    },
-                                });
-                        }
-                        else {
+                $.AryaAjax({
+                    url : url,
+                    data : new FormData(form),
+                }).then(returnData => {
+                    // console.log(returnData);
+                    deferred.resolve(returnData);
+                    if (returnData.status) {
+                        form.reset(),
                             Swal.fire({
-                                text: 'Please Check It.',
-                                html: returnData.html,
-                                icon: "warning",
+                                text: returnData.html,
+                                icon: "success",
                                 buttonsStyling: !1,
                                 confirmButtonText: "Ok, got it!",
                                 customClass: {
                                     confirmButton: "btn btn-primary",
                                 },
                             });
-                        }
-                    })
-                    .catch(function (t) {
-                        warn(t.message);
-                        warn(t.response.data);
+                    }
+                    else {
                         Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
-                            icon: "error",
+                            text: 'Please Check It.',
+                            html: returnData.html,
+                            icon: "warning",
                             buttonsStyling: !1,
                             confirmButtonText: "Ok, got it!",
-                            customClass: { confirmButton: "btn btn-primary" },
+                            customClass: {
+                                confirmButton: "btn btn-primary",
+                            },
                         });
-                    })
-                    .then(() => {
-                        submitButton.removeAttribute("data-kt-indicator", "on");
-                        submitButton.disabled = false;
-                        // $(submitButton).removeAttr('data-kt-indicator').prop("disabled", false);
-                    });
+                    }
+                });
             }
         });
     }
@@ -1623,6 +1626,7 @@ $.AryaAjax = async function (options) {
             });
         }
         if ('boolean' !== typeof settings.validation) {
+            // log(settings.validation)
             settings.validation.validate().then(function (status) {
                 // log(status);
                 if (status == 'Valid') {
@@ -2548,9 +2552,26 @@ $(document).on('submit', '.send-notification', function (e) {
         page_reload: true
     }).then((e) => showResponseError(e));
 })
-$('#notification-table').DataTable({
-    order: []
-})
+const inputElement = document.querySelectorAll('input[type="file"]');
+
+inputElement.forEach((item) => {
+    // Create a FilePond instance
+    if (item.classList.contains("no-preview")) {
+        // Register the plugin
+        FilePond.registerPlugin(FilePondPluginFileRename);
+        const pond = FilePond.create(item);
+    }
+
+    if (item.classList.contains("show-preview")) {
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        const pond = FilePond.create(item);
+    }
+
+    if (item.classList.contains("transform-preview")) {
+        FilePond.registerPlugin(FilePondPluginImageTransform);
+        const pond = FilePond.create(item);
+    }
+});
 $(document).on('submit', '.login', function (e) {
     e.preventDefault();
     // alert(4);

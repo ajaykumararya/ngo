@@ -45,11 +45,14 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.form-group',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-                    })
+                    submitButton: new FormValidation.plugins.SubmitButton(),
+                    message: new FormValidation.plugins.Message({
+                        container: function (field, element) {
+                            // Append error message after the form field
+
+                            return element.parentElement;
+                        }
+                    }),
                 }
             }
         );
@@ -68,53 +71,15 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
                     if (status == 'Valid') {
                         $(submitButton).attr('data-kt-indicator', 'on').prop('disabled', true);
-
-                        axios
-                            .post(
-                                ajax_url + 'course/add-subject',
-                                new FormData(add_form)
-                            )
-                            .then(function (e) {
-                                console.log(e);
-                                if (e.data.status) {
-                                    add_form.reset(),
-                                        Swal.fire({
-                                            text: "Subject Submited Successfully.",
-                                            icon: "success",
-                                            buttonsStyling: !1,
-                                            confirmButtonText: "Ok, got it!",
-                                            customClass: {
-                                                confirmButton: "btn btn-primary",
-                                            },
-                                        });
-                                    list_subjects.DataTable().ajax.reload();
-                                }
-                                else {
-                                    Swal.fire({
-                                        text: 'Please Check It.',
-                                        html: e.data.html,
-                                        icon: "warning",
-                                        buttonsStyling: !1,
-                                        confirmButtonText: "Ok, got it!",
-                                        customClass: {
-                                            confirmButton: "btn btn-primary",
-                                        },
-                                    });
-                                }
-                            })
-                            .catch(function (t) {
-                                console.log(t);
-                                Swal.fire({
-                                    text: "Sorry, looks like there are some errors detected, please try again.",
-                                    icon: "error",
-                                    buttonsStyling: !1,
-                                    confirmButtonText: "Ok, got it!",
-                                    customClass: { confirmButton: "btn btn-primary" },
-                                });
-                            })
-                            .then(() => {
-                                $(submitButton).removeAttr('data-kt-indicator').prop("disabled", false);
-                            });
+                        $.AryaAjax({
+                            url: 'course/add-subject',
+                            data: new FormData(add_form),
+                            success_message: "Subject Submited Successfully."
+                        }).then(res => {
+                            if (res.status)
+                                list_subjects.DataTable().ajax.reload();
+                            showResponseError(res)
+                        });
 
                     }
                 });
@@ -163,8 +128,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
             ],
             columnDefs: [
                 {
-                    target: 0,
+                    targets: 0,
                     render: function (data, type, row, meta) {
+                        // console.log(row);
                         return `${meta.row + 1}.`;
                     }
                 },
@@ -183,10 +149,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
                         delete row.id;
                         row.id = row.subject_id;
                         return `
-                                <button class="btn btn-sm btn-light-info edit-record">
+                                <button class="btn btn-sm btn-info edit-record">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button class="btn btn-sm btn-light-danger delete-subject" data-id="${row.subject_id}">
+                                <button class="btn btn-sm btn-danger delete-subject" data-id="${row.subject_id}">
                                     <i class="fa fa-trash"></i>
                                 </button>`;
                     }
@@ -199,25 +165,25 @@ document.addEventListener('DOMContentLoaded', function (e) {
         })
         $(document).on('click', '.delete-subject', function () {
             var id = $(this).data('id');
-            SwalWarning('Confirmation','Are you sure for delete this subject',true,'Delete').then((e) => {
+            SwalWarning('Confirmation', 'Are you sure for delete this subject', true, 'Delete').then((e) => {
                 if (e.isConfirmed) {
                     $.AryaAjax({
                         url: 'course/subject-delete',
                         data: { id },
                         success_message: 'Suject Deleted Successfully..'
                     }).then((f) => {
-                        if(f.status){
+                        if (f.status) {
                             list_subjects.DataTable().ajax.reload();
                             delete_list_subjects.DataTable().ajax.reload();
                         }
                         showResponseError(f);
                     });
                 }
-                else{
+                else {
                     toastr.warning('Request Aborted');
                 }
             })
-            
+
         });
     }
 
@@ -272,25 +238,25 @@ document.addEventListener('DOMContentLoaded', function (e) {
                 }
             ]
         });
-        ddt.on('draw',function(r){
-            delete_list_subjects.unDeleteEvent('subjects', 'Subject','subject_id');
+        ddt.on('draw', function (r) {
+            delete_list_subjects.unDeleteEvent('subjects', 'Subject', 'subject_id');
         })
         $(document).on('click', '.parma-delete-subject', function () {
             var id = $(this).data('id');
-            SwalWarning('Confirmation','Are you sure for delete this subject',true,'Delete').then((e) => {
+            SwalWarning('Confirmation', 'Are you sure for delete this subject', true, 'Delete').then((e) => {
                 if (e.isConfirmed) {
                     $.AryaAjax({
                         url: 'course/parma-subject-delete',
                         data: { id },
                         success_message: 'Suject Deleted Successfully..'
                     }).then((f) => {
-                        if(f.status){
+                        if (f.status) {
                             delete_list_subjects.DataTable().ajax.reload();
                         }
                         showResponseError(f);
                     });
                 }
-                else{
+                else {
                     toastr.warning('Request Aborted');
                 }
             })

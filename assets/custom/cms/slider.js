@@ -27,7 +27,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
     var index = 1;
     var dt = list_slider.DataTable({
         dom: small_dom,
+        
         buttons: [],
+        // buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
         ajax: {
             url: ajax_url + 'cms/list-sliders',
             success: function (d) {
@@ -37,7 +39,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
                     dt.rows.add(d.data).draw();
                 }
                 else {
-                    toastr.error('Table Data Not Found.');
+                    toastr.error('Table Data Not Found.',{
+                        
+                    });
                     DataTableEmptyMessage(dt);
                 }
             },
@@ -52,29 +56,31 @@ document.addEventListener('DOMContentLoaded', function (e) {
         ],
         columnDefs: [
             {
-                target : 0,
+                targets : [0],
                 render : function(a,v,c){
                     return `${index++}.`;
                 }
             },
             {
-                target : 1,
+                targets : [1],
                 render : function(data,type,row){
                     return `<div class="symbol symbol-50px me-3">                                                   
-                                <img src="${base_url}upload/${data}" class="" alt="">                                                    
+                                <img src="${base_url}upload/${data}" class="img-fluid table-avtar" alt="">                                                    
                             </div>`;
                 }
             },
             {
-                target : 2,
+                targets : [2],
                 orderable : false,
                 render : function(data,type,row){
+                    // alert(4);
                     return deleteBtnRender(1,row.id);
                 }
             }
         ]
     });
     dt.on('draw', function (e) {
+        // alert(4);
         const handle = handleDeleteRows('cms/delete-slider');
         handle.done(function (e) {
             // console.log(e);

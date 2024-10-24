@@ -88,7 +88,13 @@ class Cms extends Ajax_Controller
     }
     function update_default_page()
     {
-        $this->SiteModel->updateDefaultPage($this->post("page_id"));
+        $sql = "UPDATE `arya_his_pages`
+            SET `active_page` = CASE
+                WHEN `id` = '".$this->post('page_id')."' THEN 1
+                ELSE 0
+            END";
+    $this->db->query($sql);
+        // $this->SiteModel->updateDefaultPage($this->post("page_id"));
         $this->response('status', true);
     }
     function slider()
@@ -288,12 +294,12 @@ class Cms extends Ajax_Controller
             // File uploaded successfully
             $this->db->insert('gallery_images', ['image' => $this->upload->data('file_name')]);
             $this->response([
-                'success' => true,
+                'status' => true,
                 'filename' => $this->upload->data('file_name'),
                 'url' => base_url('upload/' . $this->upload->data('file_name')),
             ]);
         } else {
-            http_response_code(500);
+            // http_response_code(500);
             // Handle upload failure
             $this->response('error', $this->upload->display_errors('', ''));
         }

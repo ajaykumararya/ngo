@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', async function (e) {
     const table = $('#list-pages');
-    table.DataTable({
+    table.DataTable(
+        {
+            dom:small_dom,
+            buttons : []
+        }
+        /*{
         columnDefs: [
             {
                 target: 2,
@@ -24,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
                 }
             },
             {
-                target: -1,
+                target: [-1],
                 orderable: false,
                 render: function (data, type, row, meta) {
                     // log(row);
@@ -46,7 +51,8 @@ document.addEventListener('DOMContentLoaded', async function (e) {
                 }
             }
         ]
-    });
+    }
+        */);
 
     $('.table-card').removeClass('fade');
     $(document).on('click','.delete-page', function() {

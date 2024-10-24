@@ -2,8 +2,8 @@
     <div class="col-md-7">
         <div class="card border-success">
             <div class="card-header min-h-20px py-2 bg-light-success">
-                <h3 class="card-title">Manage Menu</h3>
-                <div class="toolbar">
+                <h3 class="card-title f-left">Manage Menu</h3>
+                <div class="card-toolbar">
                     {save_button}
                 </div>
             </div>

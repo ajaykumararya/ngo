@@ -2,34 +2,57 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
     const list = $('#list-images');
     var index = 1;
+    const form = $('#gallery-image');
+    const list_slider = $('#list-slider');
+    var validation = MyFormValidation(document.getElementById('gallery-image'));
+    validation.addField('image', {
+        validators: {
+            notEmpty: { message: 'Please Select Image..' }
+        }
+    })
+    // log(validation);
+    form.on('submit', function (e) {
+        e.preventDefault();
+        // log(formDataToObject(new FormData(this)));
+        var fromdata = new FormData();
+        const fileInput = $('#image')[0];
+        const file = fileInput.files[0];
+        fromdata.append('file', file);
+        $.AryaAjax({
+            validation: validation,
+            url: 'cms/upload-gallery-image',
+            data: (fromdata),
+            success_message: 'Slider Image Uploaded Successfully.',
+            page_reload: true
+        }).then(res => showResponseError(res))
+    });
     list.DataTable({
-        searching : false,
-        dom : small_dom,
-        ajax : {
-            url : `${ajax_url}cms/list-gallery-images`,
-            
+        searching: false,
+        // dom : small_dom,
+        ajax: {
+            url: `${ajax_url}cms/list-gallery-images`,
+
         },
-        columns : [
-            {'data':null},
-            {'data':'image'},
-            {'data':'title'},
-            {'data' : null}
+        columns: [
+            { 'data': null },
+            { 'data': 'image' },
+            { 'data': 'title' },
+            { 'data': null }
         ],
-        columnDefs : [
+        columnDefs: [
             {
-                targets : 0,
-                render : function(data,type,row,meta){
-                    return `${ meta.row + 1 } .`;
+                targets: 0,
+                render: function (data, type, row, meta) {
+                    return `${meta.row + 1} .`;
                 }
             },
             {
-                targets : 1,
-                render : function(data,type,row){
+                targets: 1,
+                render: function (data, type, row) {
                     return `
                                 <img
-                                    src="${base_url}assets/media/misc/spinner.gif"
-                                    data-src="${base_url}upload/${data}"
-                                    class="lozad rounded w-100px h-100px"
+                                    src="${base_url}upload/${data}"
+                                    class="img-fluid rounded w-100px h-100px"
                                     alt=""
                                 />
                                 ${row.title ?? ''}
@@ -37,33 +60,29 @@ document.addEventListener('DOMContentLoaded', function (e) {
                 }
             },
             {
-                targets : 2,
-                render : function(d,type,row){
+                targets: 2,
+                render: function (d, type, row) {
                     return `${d || '<i class="text-danger">..EMPTY..</i>'} <a href="javascript:void()" class="edit-record"><i class="fa fa-pencil"></i></a>`;
                 }
             },
             {
-                targets : -1,
-                render : function(d,v,row){
-                    return deleteBtnRender(1,row.id);
+                targets: -1,
+                render: function (d, v, row) {
+                    return deleteBtnRender(1, row.id);
                 }
             }
         ]
-    }).on('draw',function(e){
-        const observer = lozad('.lozad', {
-            rootMargin: '10px 0px', // syntax similar to that of CSS Margin
-            threshold: 0.1, // ratio of element convergence
-            enableAutoReload: true // it will reload the new image when validating attributes changes
-        });
-        observer.observe();
+    }).on('draw', function (e) {
+
         index = 1;
-        handleDeleteRows('cms/delete-gallery-image').then( (y) => {
-            list.DataTable().ajax.reload() ;
-            toastr.success('Image Deleted Successfully');
+        handleDeleteRows('cms/delete-gallery-image').then((y) => {
+            list.DataTable().ajax.reload();
+            // toastr.success('Image Deleted Successfully');
         });
-        list.EditForm('cms/update-gallery-image-title','Edit Image Title');
+        list.EditForm('cms/update-gallery-image-title', 'Edit Image Title');
     });
-    // set the dropzone container id
+    // toastr.success('Image Deleted Successfully');
+    /*
     const id = "#kt_dropzonejs_example_3";
     const dropzone = document.querySelector(id);
     // set the preview element template
@@ -133,5 +152,5 @@ document.addEventListener('DOMContentLoaded', function (e) {
     myDropzone.on('queuecomplete', function(){
         toastr.success('Process Complete Successfull');
         list.DataTable().ajax.reload();
-    })
+    })*/
 })

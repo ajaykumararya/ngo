@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     const delet_list_url = 'course/delete_list';
     const save_url = 'course/add';
     const table = $('#course_list');
-    const delete_table= $('#deleted_course_list');
+    const delete_table = $('#deleted_course_list');
     const columns = [
         { 'data': 'course_name' },
         { 'data': 'category' },
@@ -40,10 +40,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
                 {
                     targets: 1,
                     render: function (data, type, row) {
-                        if(row.category)
+                        if (row.category)
                             return `<label class="badge badge-dark">${row.category}</label>`;
                         else
-                            return  `<label class="badge badge-danger">Category Deleted</label>`;
+                            return `<label class="badge badge-danger">Category Deleted</label>`;
                     }
                 },
                 {
@@ -66,10 +66,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
                     className: 'text-end',
                     render: function (data, type, row) {
                         // console.log(row);
-                        return `<div class="btn-group">
-                                    <buttons class="btn btn-primary btn-xs btn-sm edit-record"><i class="ki-outline ki-pencil"></i> Edit</buttons>
-                                    ${row.hasOwnProperty('parent_id') ? `<button class="btn btn-info btn-xs btn-sm course-setting"><i class="fa fa-cog"></i></button>` : ``
+                        /*
+                            ${row.hasOwnProperty('parent_id') ? `<button class="btn btn-info btn-sm course-setting"><i class="fa fa-cog"></i></button>` : ``
                             }
+                        */
+                        return `<div class="btn-group">
+                                    <buttons class="btn btn-primary btn-sm edit-record"><i class="fa fa-edit"></i> Edit</buttons>
+                                    
                                     ${deleteBtnRender(0, row.course_id)}
                                 </div>
                                 `;
@@ -105,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
             });
         })
     }
-    if(delete_table.length){
+    if (delete_table.length) {
         const ddt = delete_table.DataTable({
             dom: small_dom,
             buttons: [],
@@ -117,10 +120,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
                 {
                     targets: 1,
                     render: function (data, type, row) {
-                        if(row.category)
+                        if (row.category)
                             return `<label class="badge badge-dark">${row.category}</label>`;
                         else
-                            return  `<label class="badge badge-danger">Category Deleted</label>`;
+                            return `<label class="badge badge-danger">Category Deleted</label>`;
                     }
                 },
                 {
@@ -154,8 +157,8 @@ document.addEventListener('DOMContentLoaded', function (e) {
                 }
             ]
         });
-        ddt.on('draw',function(e){
-            delete_table.unDeleteEvent('course', 'Course','course_id');
+        ddt.on('draw', function (e) {
+            delete_table.unDeleteEvent('course', 'Course', 'course_id');
             $('.delete-btn').click(function () {
                 // log(table.DataTable().data)
                 var rowData = delete_table.DataTable().row($(this).closest('tr')).data();
@@ -169,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
                         }).then((e) => {
                             if (e.status) {
                                 SwalSuccess('Success', 'Deleted Successfully..').then((e) => {
-                                    if(e.isConfirmed){
+                                    if (e.isConfirmed) {
                                         delete_table.DataTable().ajax.reload();
                                     }
                                 });
@@ -182,45 +185,33 @@ document.addEventListener('DOMContentLoaded', function (e) {
         })
     }
     if (form) {
-        var validator = FormValidation.formValidation(
-            form,
-            {
-                fields: {
-                    course_name: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Enter A Valid Course Name'
-                            }
-                        }
-                    },
-                    category_id: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Select a course category'
-                            }
-                        }
-                    },
-                    duration: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Please Enter duration'
-                            },
-                            numeric: {
-                                message: 'Please enter a valid Duration.'
-                            }
-                        }
-                    }
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.form-group',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-                    })
+        var validator = MyFormValidation(form);
+        validator.addField('course_name', {
+            validators: {
+                notEmpty: {
+                    message: 'Enter A Valid Course Name'
                 }
             }
-        );
+        });
+        validator.addField('category_id', {
+            validators: {
+                notEmpty: {
+                    message: 'Select a course category'
+                }
+            }
+        });
+
+
+        validator.addField('duration', {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter duration'
+                },
+                numeric: {
+                    message: 'Please enter a valid Duration.'
+                }
+            }
+        });
         form.addEventListener('submit', function (e) {
             // Prevent default button action
             e.preventDefault();
